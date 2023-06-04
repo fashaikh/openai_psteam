@@ -136,7 +136,7 @@ const OneShot = () => {
                 <h1 className={styles.oneshotTitle}>Ask your data</h1>
                 <div className={styles.oneshotQuestionInput}>
                     <QuestionInput
-                        placeholder="Example: can you explain rate limit policy and provide citation?"
+                        placeholder="Example: can you explain OSATS scores and provide citation?"
                         disabled={isLoading}
                         onSend={question => makeApiRequest(question)}
                     />

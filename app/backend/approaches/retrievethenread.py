@@ -16,6 +16,7 @@ class RetrieveThenReadApproach(Approach):
         self.openai_deployment = openai_deployment
         self.sourcepage_field = sourcepage_field
         self.content_field = content_field
+        self.template = template
 
     def run(self, q: str, overrides: dict) -> any:
         use_semantic_captions = True if overrides.get("semantic_captions") else False

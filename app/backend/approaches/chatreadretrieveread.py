@@ -2,7 +2,7 @@ import openai
 from azure.search.documents import SearchClient
 from azure.search.documents.models import QueryType
 from approaches.approach import Approach
-from data.knowledge import prompt_prefix
+from data.knowledge import prompt_prefix, query_prompt_template, follow_up_questions_prompt_content
 from text import nonewlines
 
 # Simple retrieve-then-read implementation, using the Cognitive Search and OpenAI APIs directly. It first retrieves
@@ -18,6 +18,8 @@ class ChatReadRetrieveReadApproach(Approach):
         self.gpt_deployment = gpt_deployment
         self.sourcepage_field = sourcepage_field
         self.content_field = content_field
+        self.prompt_prefix = prompt_prefix
+        self.query_prompt_template = query_prompt_template
 
     def run(self, history: list[dict], overrides: dict) -> any:
         """Run the approach. The history is a list of turns, where each turn is a dict with 'user' and 'bot' keys. The overrides dict can be used to pass in additional parameters to the approach."""

@@ -21,3 +21,8 @@ change line 10 from  name: 'S0' to name: 'C2' -->
 6. To redeploy after changes, run `azd up`
 
 
+This repo uses READ->RETRIEVE->READ, READ->DECOMPOSE->ASK, RETRIEVE->THEN->READ approaches over user provided data using the Retrieval Augmented Generation pattern. It uses Azure OpenAI Service to access the ChatGPT model (gpt-35-turbo), and Azure Cognitive Search for data indexing and retrieval.
+
+The repo includes sample publication data.
+
+![RAG Architecture](docs/appcomponents.png)

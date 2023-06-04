@@ -1,8 +1,6 @@
 # openai_steam
 A collection of science, technology, engineering, AI and mathematical (STEAM) tools to accelerate openai based development and deployment
 
-## OpenAI and Cogniitve Search with Specific Knowledge Base, Grounding Prompt and Thought Process
-
 ### Installation and Deployment
 1. Create a new folder
 and clone this repository to get the code base

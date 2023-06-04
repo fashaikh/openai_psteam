@@ -9,41 +9,7 @@ from text import nonewlines
 # top documents from search, then constructs a prompt with them, and then uses OpenAI to generate an completion 
 # (answer) with that prompt.
 class ChatReadRetrieveReadApproach(Approach):
-    """Simple retrieve-then-read implementation, using the Cognitive Search and OpenAI APIs directly. It first retrieves and ranks top documents from search, then constructs a prompt with them, and then uses OpenAI to generate an completion (answer) with that prompt."""
-#     prompt_prefix = """<|im_start|>system
-# Assistant helps the developer with Azure API management policy questions. Provide xml response in your answers.
-# Answer ONLY with the facts listed in the list of sources below. If there isn't enough information below, say you don't know. 
-# Do not generate answers that don't use the sources below. If asking a clarifying question to the user would help, ask the question.
-# For tabular information return it as an html table. Do not return markdown format.
-# Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response.
-#  Use square brakets to reference the source, e.g. [info1.xml]. Don't combine sources, list each source separately, e.g. [info1.xml][info2.pdf].
-# {follow_up_questions_prompt}
-# {injected_prompt}
-# Sources:
-# {sources}
-# <|im_end|>
-# {chat_history}
-# """
-
-#     follow_up_questions_prompt_content = """Generate three very brief follow-up questions that the user would likely ask next about the Azure API management policy. 
-#     Use double angle brackets to reference the questions, e.g. <<Are there any rate limits to be applied?>>.
-#     Try not to repeat questions that have already been asked.
-#     Only generate questions and do not generate any text before or after the questions, such as 'Next Questions'"""
-
-#     query_prompt_template = """Below is a history of the conversation so far, and a new question asked by the user that needs to be answered by searching in a knowledge base about Azure API Managemnt Policy.
-#     Generate a search query based on the conversation and the new question. 
-#     Do not include cited source filenames and document names e.g info.txt or doc.pdf in the search query terms.
-#     Do not include any text inside [] or <<>> in the search query terms.
-#     If the question is not in English, translate the question to English before generating the search query.
-
-# Chat History:
-# {chat_history}
-
-# Question:
-# {question}
-
-# Search query:
-# """
+   
 
     def __init__(self, search_client: SearchClient, chatgpt_deployment: str, gpt_deployment: str, sourcepage_field: str, content_field: str):
         """Initialize the approach with the search client and the base model deployment name."""

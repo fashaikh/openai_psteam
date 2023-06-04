@@ -20,25 +20,6 @@ from data.knowledge import template_prefix
 class ReadRetrieveReadApproach(Approach):
     """Approach that uses GPT to iteratively retrieve information from a set of tools until it can answer the question."""
 
-#     template_prefix = \
-# "You are an intelligent assistant helping API Management developers with their policy questions. " \
-# "Answer the question using only the data provided in the information sources below. " \
-# "For tabular information return it as an html table. Do not return markdown format. " \
-# "Each source has a name followed by colon and the actual data, quote the source name for each piece of data you use in the response. " \
-# "For example, if the question is \"What color is the sky?\" and one of the information sources says \"info123: the sky is blue whenever it's not cloudy\", then answer with \"The sky is blue [info123]\" " \
-# "It's important to strictly follow the format where the name of the source is in square brackets at the end of the sentence, and only up to the prefix before the colon (\":\"). " \
-# "If there are multiple sources, cite each one in their own square brackets. For example, use \"[info343][ref-76]\" and not \"[info343,ref-76]\". " \
-# "Never quote tool names as sources." \
-# "If you cannot answer using the sources below, say that you don't know. " \
-# "\n\nYou can access to the following tools:"
-    
-#     template_suffix = """
-# Begin!
-
-# Question: {input}
-
-# Thought: {agent_scratchpad}"""    
-
     CognitiveSearchToolDescription = "useful for searching the Microsoft employee benefits information such as healthcare plans, retirement plans, etc."
 
     def __init__(self, search_client: SearchClient, openai_deployment: str, sourcepage_field: str, content_field: str):

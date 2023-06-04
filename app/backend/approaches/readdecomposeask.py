@@ -10,7 +10,7 @@ from langchain.agents.react.base import ReActDocstoreAgent
 from langchainadapters import HtmlCallbackHandler
 from text import nonewlines
 from typing import List
-from data.knowledge import EXAMPLES, SUFFIX
+from data.knowledge import EXAMPLES, SUFFIX, PREFIX
 
 class ReadDecomposeAsk(Approach):
     def __init__(self, search_client: SearchClient, openai_deployment: str, sourcepage_field: str, content_field: str):

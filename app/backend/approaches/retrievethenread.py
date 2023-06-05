@@ -45,8 +45,8 @@ class RetrieveThenReadApproach(Approach):
         completion = openai.Completion.create(
             engine=self.openai_deployment, 
             prompt=prompt, 
-            temperature=overrides.get("temperature") or 0.3, 
-            max_tokens=1024, 
+            temperature=overrides.get("temperature") or 0.0, 
+            max_tokens=2000, 
             n=1, 
             stop=["\n"])
 

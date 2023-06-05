@@ -35,7 +35,7 @@ class ChatReadRetrieveReadApproach(Approach):
             engine=self.gpt_deployment, 
             prompt=prompt, 
             temperature=0.0, 
-            max_tokens=32, 
+            max_tokens=2000, 
             n=1, 
             stop=["\n"])
         q = completion.choices[0].text
@@ -73,8 +73,8 @@ class ChatReadRetrieveReadApproach(Approach):
         completion = openai.Completion.create(
             engine=self.chatgpt_deployment, 
             prompt=prompt, 
-            temperature=overrides.get("temperature") or 0.7, 
-            max_tokens=1024, 
+            temperature=overrides.get("temperature") or 0.0, 
+            max_tokens=2000, 
             n=1, 
             stop=["<|im_end|>", "<|im_start|>"])
 

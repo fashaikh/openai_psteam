@@ -20,6 +20,7 @@ class ChatReadRetrieveReadApproach(Approach):
         self.content_field = content_field
         self.prompt_prefix = prompt_prefix
         self.query_prompt_template = query_prompt_template
+        self.follow_up_questions_prompt_content = follow_up_questions_prompt_content
 
     def run(self, history: list[dict], overrides: dict) -> any:
         """Run the approach. The history is a list of turns, where each turn is a dict with 'user' and 'bot' keys. The overrides dict can be used to pass in additional parameters to the approach."""

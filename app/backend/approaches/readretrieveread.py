@@ -10,7 +10,7 @@ from langchain.llms.openai import AzureOpenAI
 from langchainadapters import HtmlCallbackHandler
 from text import nonewlines
 from lookuptool import CsvLookupTool
-from data.knowledge import template_prefix
+from data.knowledge import template_prefix, template_suffix
 
 # Attempt to answer questions by iteratively evaluating the question to see what information is missing, and once all information
 # is present then formulate an answer. Each iteration consists of two parts: first use GPT to see if we need more information, 
@@ -28,6 +28,8 @@ class ReadRetrieveReadApproach(Approach):
         self.openai_deployment = openai_deployment
         self.sourcepage_field = sourcepage_field
         self.content_field = content_field
+        self.template_prefix = template_prefix
+        self.template_suffix = template_suffix
 
     def retrieve(self, q: str, overrides: dict) -> any:
         """Retrieve information from the search index."""
@@ -88,11 +90,11 @@ class ReadRetrieveReadApproach(Approach):
 
 class KnowledgeBaseInfoTool(CsvLookupTool):
     """Tool that provides information about the knowledge base."""
-    employee_name: str = ""
+    kb_variable_name: str = ""
 
     def __init__(self, kb_variable_name: str):
         super().__init__(filename = "data/sample_kb_info.csv", key_field = "name", name = "kb_entity", description = "useful for answering questions about the data in the knowledge base")
-        self.func = self.employee_info
+        self.func = self.kb_info
         self.kb_variable_name = kb_variable_name
 
     def kb_info(self, unused: str) -> str:

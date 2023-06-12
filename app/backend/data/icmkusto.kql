@@ -1,0 +1,45 @@
+
+let extractTextFromHtml=(inputString:string) {trim(" ",strcat_array(extract_all('(?:<[^>]+>|&nbsp;|\\s+|\n)*([^<>\n]+)(?:<[^>]+>|&nbsp;|\\s+|\n)*', inputString)," "))};
+let ST = ago(180d);
+let ET = ago(2d);
+cluster('icmclusterlb.kustomfa.windows.net').database('IcMDataWarehouse').IncidentsSnapshotV2() 
+| where CreateDate >= ST and CreateDate <= ET
+| where OwningTenantId==10060 and OwningTeamId ==58003
+and isnotempty(RootCauseId )
+| join kind=innerunique  (RootCauses 
+| where OwningTenantId==10060 
+) on  RootCauseId
+|extend RCADescription = extractTextFromHtml(Description), ICMSummary=extractTextFromHtml(Summary),RCAMitigation=extractTextFromHtml(Mitigation)
+| project  CreateDate,IncidentId, ['Incident Title'] = Title, ICMSummary,['Root Cause']=RCADescription , ['Root Cause Category']=Category, ['Root Cause SubCategory'] = SubCategory, ['Incident Mitigation']= RCAMitigation, Fix,SubscriptionId, Component, CustomerName, IsCausedByChange, IsCustomerImpacting, IsNoise, HowFixed, ImpactedScenarios,
+IsOutage,IsSecurityRisk,Keywords,OccurringDatacenter,OccurringEnvironment, ResponsibleTeamId,ResponsibleTeamName, ResponsibleTenantId, ResponsibleTenantName,ResponsibleTenantPublicId, SourceName, Severity
+| join kind=innerunique (IncidentCustomFieldEntries | where TenantId==10060 or TeamId ==58003 
+| project IncidentId, Name,extractTextFromHtml(Value)
+| extend p = bag_pack(Name, Column1)
+| summarize bag=make_bag(p) by IncidentId
+| evaluate bag_unpack(bag))
+on IncidentId
+| order by CreateDate asc
+| take 1000
+
+
+let extractTextFromHtml=(inputString:string) {trim(" ",strcat_array(extract_all('(?:<[^>]+>|&nbsp;|\\s+|\n)*([^<>\n]+)(?:<[^>]+>|&nbsp;|\\s+|\n)*', inputString)," "))};
+let ST = ago(10d);
+let ET = now();
+cluster('icmclusterlb.kustomfa.windows.net').database('IcMDataWarehouse').IncidentsSnapshotV2()
+| where CreateDate >= ST and CreateDate <= ET
+| where OwningTenantId==10060 and OwningTeamId ==58003
+and isempty(RootCauseId )
+| join kind=leftouter (RootCauses 
+| where OwningTenantId==10060 
+) on  RootCauseId
+|extend RCADescription = extractTextFromHtml(Description), ICMSummary=extractTextFromHtml(Summary),RCAMitigation=extractTextFromHtml(Mitigation)
+| project  CreateDate,IncidentId, ['Incident Title'] = Title, ICMSummary,['Root Cause']=RCADescription , ['Root Cause Category']=Category, ['Root Cause SubCategory'] = SubCategory, ['Incident Mitigation']= RCAMitigation, Fix,SubscriptionId, Component, CustomerName, IsCausedByChange, IsCustomerImpacting, IsNoise, HowFixed, ImpactedScenarios,
+IsOutage,IsSecurityRisk,Keywords,OccurringDatacenter,OccurringEnvironment, ResponsibleTeamId,ResponsibleTeamName, ResponsibleTenantId, ResponsibleTenantName,ResponsibleTenantPublicId, SourceName, Severity
+| join kind=innerunique (IncidentCustomFieldEntries | where TenantId==10060 or TeamId ==58003 
+| project IncidentId, Name,extractTextFromHtml(Value)
+| extend p = bag_pack(Name, Column1)
+| summarize bag=make_bag(p) by IncidentId
+| evaluate bag_unpack(bag))
+on IncidentId
+| order by CreateDate asc
+| take 100
